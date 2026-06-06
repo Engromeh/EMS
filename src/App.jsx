@@ -1,6 +1,9 @@
 
 import './App.css'
 import Login from './pages/auth/Login'
+import { Routes, Route } from "react-router-dom";
+import Register from './pages/auth/Register';
+
 
 function App() {
 
@@ -8,8 +11,10 @@ function App() {
     <>
       
        
-
-   <Login />
+ <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
 
 
       
