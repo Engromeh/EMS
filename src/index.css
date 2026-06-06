@@ -1,2 +1,16 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --color-primary:#0F172A;
+  --color-secondary:#3B82F6;
+  --color-accent: #64748B;
+  --color-white: #F8FAFC;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  background-color: #ffffff;
+  color: #1F2937;
+}

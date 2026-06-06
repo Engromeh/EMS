@@ -1,5 +1,6 @@
 
 import './App.css'
+import Login from './pages/auth/Login'
 
 function App() {
 
@@ -8,12 +9,7 @@ function App() {
       
        
 
-    <div className="min-h-screen flex justify-center items-center">
-      <button className="btn btn-primary">
-        DaisyUI Working 🚀
-      </button>
-    </div>
-
+   <Login />
 
 
       
