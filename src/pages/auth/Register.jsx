@@ -38,7 +38,7 @@ const Register = () => {
     <>
       <div className="navbar  shadow-sm">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">EMS</a>
+          <a className="btn btn-ghost text-4xl">EMS</a>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">

@@ -28,7 +28,7 @@ const Login = () => {
         alt="Company Logo"
         className="w-24 h-24 mx-auto mt-6"
       />
-      <legend className="fieldset-legend color-[#1B2B4B]">EMS</legend>
+      <legend className="fieldset-legend color-[#1B2B4B] text-4xl">EMS</legend>
 
       <form className="border border-gray-200 rounded-xl p-6 w-full max-w-md mx-auto bg-white">
         <div className="mb-4">
@@ -84,9 +84,9 @@ const Login = () => {
             <label className="text-sm font-medium text-[#1B2B4B]">
               Password
             </label>
-            <span className="text-sm text-blue-500 cursor-pointer hover:underline">
+            <Link to="/forgetpassword" className="text-sm text-blue-500 cursor-pointer hover:underline">
               Forgot Password?
-            </span>
+            </Link>
           </div>
           <div className="relative">
             <input
