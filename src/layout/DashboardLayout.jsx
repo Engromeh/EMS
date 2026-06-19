@@ -1,590 +1,195 @@
+import React, { useState } from "react";
+import { IoSettingsOutline } from "react-icons/io5";
+import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
+import { MdOutlineAnalytics } from "react-icons/md";
+import { FaCalendarCheck } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
+import { NavLink, Outlet } from "react-router-dom";
+import Searchbar from "../Commponents/Ui/Searchbar";
+import Notification from "../Commponents/Ui/Notification";
 
 const DashboardLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const sidebarItems = [
+    {
+      title: "Dashboard",
+      path: "/dashboard",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z"
+          />
+          <path
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: "Employees",
+      path: "/employees",
+      icon: <FaUsers className="w-5 h-5" />,
+    },
+    {
+      title: "Attendance",
+      path: "/attendance",
+      icon: <FaCalendarCheck className="w-5 h-5" />,
+    },
+    {
+      title: "Request",
+      path: "/request",
+      icon: <VscGitPullRequestGoToChanges className="w-5 h-5" />,
+    },
+    {
+      title: "Analytics",
+      path: "/analytics",
+      icon: <MdOutlineAnalytics className="w-5 h-5" />,
+    },
+    {
+      title: "Settings",
+      path: "/settings",
+      icon: <IoSettingsOutline className="w-5 h-5" />,
+    },
+  ];
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+  };
+
   return (
     <>
-      <nav class="fixed top-0 z-50 w-full bg-neutral-primary-soft border-b border-default">
-        <div class="px-3 py-3 lg:px-5 lg:pl-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start rtl:justify-end">
-              <button
-                data-drawer-target="top-bar-sidebar"
-                data-drawer-toggle="top-bar-sidebar"
-                aria-controls="top-bar-sidebar"
-                type="button"
-                class="sm:hidden text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none"
+      {/* Navbar */}
+      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="sm:hidden p-2 rounded-lg hover:bg-gray-100"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <span class="sr-only">Open sidebar</span>
-                <svg
-                  class="w-6 h-6"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-width="2"
-                    d="M5 7h14M5 12h14M5 17h10"
-                  />
-                </svg>
-              </button>
-              <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-                <img
-                  src="https://flowbite.com/docs/images/logo.svg"
-                  class="h-6 me-3"
-                  alt="FlowBite Logo"
+                <path
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
                 />
-                <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
-                  Flowbite
-                </span>
-              </a>
-            </div>
-            <div class="flex items-center">
-              <div class="flex items-center ms-3">
-                <div>
-                  <button
-                    type="button"
-                    class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                    aria-expanded="false"
-                    data-dropdown-toggle="dropdown-user"
-                  >
-                    <span class="sr-only">Open user menu</span>
-                    <img
-                      class="w-8 h-8 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                      alt="user photo"
-                    />
-                  </button>
-                </div>
-                <div
-                  class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
-                  id="dropdown-user"
+              </svg>
+            </button>
+
+            <h1 className="font-bold text-xl">EMS</h1>
+          </div>
+
+          <div className="hidden md:flex flex-1 justify-center px-6">
+            <Searchbar />
+          </div>
+
+          <div className="flex items-center gap-4 relative">
+            <Notification />
+
+            {/* User Avatar */}
+            <button
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              className="rounded-full overflow-hidden border-2 border-gray-200"
+            >
+              <img
+                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                alt="profile"
+                className="w-10 h-10 object-cover"
+              />
+            </button>
+
+            {/* User Dropdown */}
+            {userMenuOpen && (
+              <div className="absolute right-0 top-14 w-52 bg-white rounded-xl shadow-lg border z-50">
+                <button className="w-full text-left px-4 py-3 hover:bg-gray-100">
+                  Profile
+                </button>
+
+                <button className="w-full text-left px-4 py-3 hover:bg-gray-100">
+                  Settings
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-3 text-red-500 hover:bg-gray-100"
                 >
-                  <div
-                    class="px-4 py-3 border-b border-default-medium"
-                    role="none"
-                  >
-                    <p class="text-sm font-medium text-heading" role="none">
-                      Neil Sims
-                    </p>
-                    <p class="text-sm text-body truncate" role="none">
-                      neil.sims@flowbite.com
-                    </p>
-                  </div>
-                  <ul class="p-2 text-sm text-body font-medium" role="none">
-                    <li>
-                      <a
-                        href="#"
-                        class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                        role="menuitem"
-                      >
-                        Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                        role="menuitem"
-                      >
-                        Settings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                        role="menuitem"
-                      >
-                        Earnings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                        role="menuitem"
-                      >
-                        Sign out
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                  Logout
+                </button>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </nav>
 
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/50 z-30 sm:hidden"
+        />
+      )}
+
       <aside
-        id="top-bar-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0"
-        aria-label="Sidebar"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-white border-r border-gray-200 transition-transform duration-300
+        ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0`}
       >
-        <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
-          <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
+        <div className="h-full px-4 py-5">
+          <div className="flex items-center gap-2 mb-10">
             <img
               src="https://flowbite.com/docs/images/logo.svg"
-              class="h-6 me-3"
-              alt="Flowbite Logo"
+              alt="logo"
+              className="w-8 h-8"
             />
-            <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">
-              EMS
-            </span>
-          </a>
-          <ul class="space-y-2 font-medium">
-            <li>
-              <a
-                href="#"
-                class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <svg
-                  class="w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+            <h2 className="font-bold text-xl">EMS</h2>
+          </div>
+
+          <ul className="space-y-2">
+            {sidebarItems.map((item) => (
+              <li key={item.title}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3 py-3 rounded-lg transition-all
+                    ${
+                      isActive
+                        ? "bg-blue-100 text-blue-600"
+                        : "hover:bg-gray-100 text-gray-700"
+                    }`
+                  }
                 >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z"
-                  />
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z"
-                  />
-                </svg>
-                <span class="ms-3">Dashboard</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <svg
-                  class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 5v14M9 5v14M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
-                  />
-                </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Kanban</span>
-                <span class="bg-neutral-secondary-medium border border-default-medium text-heading text-xs font-medium px-1.5 py-0.5 rounded-sm">
-                  Pro
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <svg
-                  class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8"
-                  />
-                </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
-                <span class="inline-flex items-center justify-center w-4.5 h-4.5 ms-2 text-xs font-medium text-fg-danger-strong bg-danger-soft border border-danger-subtle rounded-full">
-                  2
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <svg
-                  class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-width="2"
-                    d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <svg
-                  class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"
-                  />
-                </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group"
-              >
-                <svg
-                  class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
-                  />
-                </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
-              </a>
-            </li>
+                  {item.icon}
+                  <span>{item.title}</span>
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
       </aside>
 
-      <div class="p-4 sm:ml-64 mt-14">
-        <div class="p-4 border-1 border-default border-dashed rounded-base">
-          <div class="grid grid-cols-3 gap-4 mb-4">
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center justify-center h-48 rounded-base bg-neutral-secondary-soft mb-4">
-            <p class="text-fg-disabled">
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 12h14m-7 7V5"
-                />
-              </svg>
-            </p>
-          </div>
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center justify-center h-48 rounded-base bg-neutral-secondary-soft mb-4">
-            <p class="text-fg-disabled">
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 12h14m-7 7V5"
-                />
-              </svg>
-            </p>
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
-              <p class="text-fg-disabled">
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14m-7 7V5"
-                  />
-                </svg>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      <main className="sm:ml-64 mt-16 p-6">
+      <Outlet />
+      </main>
     </>
   );
 };
