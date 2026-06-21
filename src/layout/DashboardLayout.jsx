@@ -55,7 +55,7 @@ const DashboardLayout = () => {
     },
     {
       title: "Analytics",
-      path: "/analytics",
+      path: "/dashboard",
       icon: <MdOutlineAnalytics className="w-5 h-5" />,
     },
     {
@@ -187,9 +187,9 @@ const DashboardLayout = () => {
       </aside>
 
       
-      <main className="sm:ml-64 mt-16 p-6">
-      <Outlet />
-      </main>
+   <main className="sm:ml-64 mt-16 p-6 overflow-x-hidden">
+  <Outlet />
+</main>
     </>
   );
 };

@@ -5,6 +5,8 @@ import NavbarAuth from "../../layout/NavbarAuth";
 import TitelAuth from "../../Commponents/Ui/TitelAuth";
 import Inpute from "../../Commponents/Ui/Inpute";
 import Button from "../../Commponents/Ui/Button";
+import { LogIn } from "lucide-react";
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -65,8 +67,7 @@ const Login = () => {
         </label>
 
         {/* Button */}
-        <Button Text="Sign In" />
-        {/* Footer */}
+<Button Text="Sign In" Icon={<LogIn size={18} />}  classname="w-full"/>        {/* Footer */}
         <div className="divider my-3" />
         <p className="text-center text-xs text-gray-400">
           Secured by EMS Advanced Auth™

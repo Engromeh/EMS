@@ -1,17 +1,22 @@
-import {  LogIn } from "lucide-react";
-
-const Button = ({Text}) => {
+const Button = ({
+  Text,
+  Icon,
+  type = "button",
+  className = "",
+  onClick,
+  style = {},
+  ...rest
+}) => {
   return (
-    <>
-      <button
-          type="submit"
-          className="btn w-full bg-[#1B2B4B] text-white rounded-md hover:bg-[#152338] flex items-center justify-center gap-2"
-        >
-          {Text}
-          <LogIn size={18} />
-        </button>
-    </>
-  )
-}
+    <button
+      type={type}
+      onClick={onClick}
+      className={`w-full rounded-md flex items-center justify-center gap-2 transition-all duration-200 ${className}`}
+    >
+      {Icon}
+      <span>{Text}</span>
+    </button>
+  );
+};
 
-export default Button
+export default Button;
